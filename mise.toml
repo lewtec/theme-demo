@@ -1,0 +1,6 @@
+[tools]
+node = "20.14.0"
+
+[tasks]
+ci = "echo 'ci pass'"
+test = "echo 'test pass'"
