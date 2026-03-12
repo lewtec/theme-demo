@@ -1,0 +1,65 @@
+name: Autorelease
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+  release:
+    types:
+      - created
+
+jobs:
+  autorelease:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup mise
+        uses: jdx/mise-action@v2
+
+      - name: Install
+        run: mise run install
+
+      - name: Codegen
+        run: mise run codegen
+
+      - name: Check for changes
+        id: git-diff
+        run: |
+          git add -A
+          git diff --cached --quiet || echo "changed=true" >> $GITHUB_OUTPUT
+          git reset HEAD
+
+      - name: Create PR if Difference
+        if: steps.git-diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "🤖 Codegen Update"
+          body: "Automated PR to apply generated code changes."
+          commit-message: "chore: apply codegen updates"
+          branch: "chore/codegen-update"
+
+      - name: CI
+        run: mise run ci
+
+      - name: Release
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Only attempting release if there are tags or specific trigger.
+          gh release create "v$(date +'%Y%m%d%H%M%S')" --generate-notes || true
+
+      - name: Upload Artifacts
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'release'
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: |
+            *
+            !.*
+            !.git

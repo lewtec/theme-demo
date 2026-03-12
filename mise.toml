@@ -1,0 +1,20 @@
+[tools]
+"github:lucasew/workspaced" = "0.2.2"
+
+[tasks.lint]
+run = "workspaced codebase lint"
+
+[tasks.fmt]
+run = "workspaced codebase format"
+
+[tasks.test]
+depends = ["[task]:*"]
+
+[tasks.codegen]
+depends = ["[task]:*"]
+
+[tasks.install]
+depends = ["[task]:*"]
+
+[tasks.ci]
+depends = ["lint", "test"]
