@@ -1,0 +1,1 @@
+- 2024-03-16: [Medium] Third-party resources missing integrity attributes and external links missing safe rel attributes.

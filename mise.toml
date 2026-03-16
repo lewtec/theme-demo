@@ -1,0 +1,5 @@
+[tools]
+node = "20.14.0"
+
+[tasks]
+test = "echo 'No tests yet, but tests are important!'"
