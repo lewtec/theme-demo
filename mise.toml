@@ -1,0 +1,5 @@
+[tools]
+node = "20.14.0"
+
+[tasks]
+test = "grep -q noopener index.html"

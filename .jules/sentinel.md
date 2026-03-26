@@ -1,0 +1,1 @@
+- 2025-03-26: [Medium] External links opening in new tabs missing `rel="noopener noreferrer"` attributes can expose window.opener.
