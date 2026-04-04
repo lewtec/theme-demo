@@ -1,0 +1,1 @@
+- 2026-04-04: Forms containing password fields must use method="POST" to prevent sensitive data exposure in URL parameters via GET.
