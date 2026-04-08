@@ -1,0 +1,1 @@
+- 2024-04-08: [Refactoring] Moving root index.html to src requires updating referencing paths inside the file and potentially adjusting build config.
