@@ -1,0 +1,1 @@
+- 2026-06-06: Always define the 'lang' attribute on the root html element to improve accessibility.
